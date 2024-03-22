@@ -5,7 +5,8 @@ import 'mycar.dart';
 import 'locations.dart';
 import 'shop.dart';
 import 'sos.dart';
-
+import 'package:weather/weather.dart';
+import 'package:url_launcher/url_launcher.dart';
 class main_page extends StatefulWidget {
   const main_page({super.key});
 
@@ -16,12 +17,9 @@ class main_page extends StatefulWidget {
 class _main_pageState extends State<main_page> {
   int _selectedIndex = 0;
   final _weatherService = WeatherService("e64ddb42aa0a3682f78ac8fbbed336fa");
-  Weather? _weather;
-@override
-  void initState() {
-    // TODO: implement initState
-    weather_fetch();
-  }
+  final Uri _url = Uri.parse('mailto:johndoe@example.com?subject=Help');
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -59,8 +57,14 @@ class _main_pageState extends State<main_page> {
           Padding(
             padding: const EdgeInsets.only(left: 1.0),
             child: IconButton(
-              onPressed: () {
+              onPressed: () async{
+                Future<void> _launchUrl() async {
+                  if (!await launchUrl(_url)) {
+                    throw Exception('Could not launch $_url');
+                  }
 
+                }
+                _launchUrl();
               },
               icon: Icon(Icons.email),
             ),
@@ -102,15 +106,14 @@ class _main_pageState extends State<main_page> {
               ),
             ),
             SizedBox(height: 16.0),
-            Text("Hava Durumu:",style:Theme.of(context).textTheme.headlineSmall),
-            Text(_weather?.cityName ?? "dd"),
-            Text(_weather?.temperature.toString() ?? "dd"),
+
 
           ],
         ),
       ),
     );
   }
+
  AlertDialog warning_person=AlertDialog(
    title:Text("Login"),
   content: Text("You need to login to access this feature"),
@@ -135,24 +138,9 @@ void _itemtap(int index){
     Navigator.push(context, MaterialPageRoute(builder: (context) => sos()));
   }
 }
-void weather_fetch() async{
-
- String cityName=await _weatherService.getCurrentCity();
-  try{
-    final weather=await _weatherService.getWeather(cityName);
-    setState(() {
-  _weather=weather;
-    });
-  }catch(e){
-    print(e);
-  }
 
 }
 
-
-
-
-}
 class page_constant{
   static  String main_page = "Welcome to Car Care App";
 }
