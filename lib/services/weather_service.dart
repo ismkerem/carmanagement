@@ -28,10 +28,5 @@ Future<String> getCurrentCity() async{
    List<Placemark> placemarks = await placemarkFromCoordinates(position.latitude, position.longitude);
    String? city= placemarks[0].locality;
    return city ?? "";
-
-}
-
-
-
-
+  }
 }
