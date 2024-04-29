@@ -1,5 +1,3 @@
-import 'package:carmanagement/models/weather_model.dart';
-import 'package:carmanagement/services/weather_service.dart';
 import 'package:flutter/material.dart';
 import 'mycar.dart';
 import 'locations.dart';
@@ -16,8 +14,13 @@ class main_page extends StatefulWidget {
 
 class _main_pageState extends State<main_page> {
   int _selectedIndex = 0;
-  final _weatherService = WeatherService("e64ddb42aa0a3682f78ac8fbbed336fa");
+
+
+
+
   final Uri _url = Uri.parse('mailto:johndoe@example.com?subject=Help');
+
+
 
 
 
